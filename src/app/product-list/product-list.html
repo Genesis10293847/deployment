@@ -1,0 +1,65 @@
+<!-- Search bar -->
+<div class="mb-3">
+  <input 
+    type="search" 
+    class="form-control" 
+    placeholder="Search products..." 
+    [(ngModel)]="searchText">
+</div>
+
+<!-- Product list -->
+<table class="table">
+  <thead>
+    <tr>
+      <th class="text-bg-danger text-white">Name</th>
+      <th class="text-bg-danger text-white">Price</th>
+      <th class="text-bg-danger text-white">Action</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr *ngFor="let p of filteredProducts">
+      <td>{{ p.name }}</td>
+      <td>₱{{ p.price }}</td>
+      <td>
+        <button 
+          class="btn btn-info text-white" 
+          (click)="addToCart(p)" 
+          [disabled]="p.stock === 0">
+          {{ p.stock === 0 ? 'Out of Stock' : 'Add to Cart' }}
+        </button>
+      </td>
+    </tr>
+  </tbody>
+</table>
+
+<!-- Mini Cart -->
+<div class="card mt-4">
+  <div class="card-header text-bg-warning">Cart</div>
+  <div class="card-body">
+    <ng-container *ngIf="cart.length > 0; else emptyCart">
+      <ul class="list-group mb-3">
+        <li 
+          class="list-group-item d-flex justify-content-between align-items-center"
+          *ngFor="let item of cart; trackBy: trackById">
+          <span>
+            {{ item.name }} 
+            <span class="badge bg-secondary ms-2">x{{ item.quantity }}</span>
+          </span>
+          <span>₱{{ (item.price * item.quantity).toFixed(2) }}</span>
+        </li>
+      </ul>
+      <div class="d-flex justify-content-between align-items-center">
+        <strong>Total:</strong>
+        <span class="fs-5 text-success">₱{{ totalPrice }}</span>
+      </div>
+    </ng-container>
+
+    <ng-template #emptyCart>
+      <div class="alert alert-info text-center mb-0">Your cart is empty.</div>
+    </ng-template>
+  </div>
+</div>
+
+      <div class="text-end mt-3" style="margin-right: 20px;">
+        <a class="btn btn-warning" routerLink="/cart">Go to Cart</a>
+      </div>
