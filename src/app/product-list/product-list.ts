@@ -5,7 +5,6 @@ import { FormsModule } from '@angular/forms';
 
 @Component({
   selector: 'app-product-list',
-  standalone: true,
   imports: [RouterModule, CommonModule, FormsModule],
   templateUrl: './product-list.html',
   styleUrls: ['./product-list.css']
